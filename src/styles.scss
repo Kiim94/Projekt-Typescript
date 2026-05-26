@@ -36,6 +36,16 @@ h1{
     background:rgb(156,209,209);
 }
 
+//div runt båda tabeller. Satt globalt pga att det är exakt samma styling
+.tableWrap{
+    width:100%;
+    position:relative;
+    overflow-x: auto;
+
+    //detta ska ge mer mjuk scroll på mobil
+    -webkit-overflow-scrollning: touch;
+}
+
 app-root{
     display:block;
     height:100vh;
