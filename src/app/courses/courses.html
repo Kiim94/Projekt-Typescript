@@ -1,0 +1,66 @@
+<div id="coursesDiv">
+  <div class="content">
+    <h1>Sök och sortera på kurser</h1>
+      <p style="text-align:center;">Klicka på kolumn-namnen för att ändra ordning</p>
+      <div id="inpSel">
+        <input (input)="setSearch($event.target.value)" placeholder="Sök...">
+        <select #subject (change)="selectedSubject.set(subject.value)">
+
+            @for (subject of subjects(); track subject){
+                <option [value]="subject">
+                    {{ subject }}
+                </option>
+                }
+        </select>
+        </div>
+
+      @if (loading()) {
+        <p>Laddar...</p>
+      } @else {
+      @if(message()){
+          <p class="message"
+           [class.success]="isSuccess()"
+           [class.error]="!isSuccess()">
+           {{ message() }}
+          </p>
+      }
+        <div class="tableWrap">
+          
+          <table>
+            <thead>
+              <tr>
+                <th (click)="sortBy('courseCode')">Kurskod <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
+                <th (click)="sortBy('courseName')">Kursnamn <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
+                <th (click)="sortBy('level')">Nivå <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
+                <th (click)="sortBy('subject')">Ämne <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
+                <th>Lägg till</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!--for loop: gå igenom lista från filteredCourses(), använd kurskod som id för varje skapad rad-->
+              @for (course of paginatedCourses(); track course.courseCode) {
+                <tr>
+                  <td>{{ course.courseCode }}</td>
+                  <td>{{ course.courseName }}</td>
+                  <td>{{ course.level }}</td>
+                  <td>{{ course.subject }}</td>
+                  <td>
+                    <span class="remove" (click)="addToSchedule(course)">Lägg till</span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+          
+        </div>
+      }
+      
+  </div>
+  <div class="pagination">
+    <button class="pages" (click)="prevPage()"
+    [disabled]="currentPage() === 1">Föregående</button>
+    <span>Sida {{ currentPage() }}</span>
+    <button class="pages" (click)="nextPage()">Nästa</button>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.remove{
+    color:red;
+    cursor:pointer;
+    text-decoration:underline;
+    &:hover{
+        text-decoration:none;
+        color: crimson;
+        font-style:italic;
+    }
+}
+
+
+tr:nth-child(even){
+    background-color: rgb(231, 241, 241);
+}
+th:nth-child(2), td:nth-child(2){
+    width:35%;
+}
+.sortBy, th{
+    cursor: pointer;
+        &:hover{
+            color:grey;
+            text-decoration:underline;
+        }
+}
