@@ -1,5 +1,7 @@
 
-
+#coursesDiv{
+    margin:0 1rem;
+}
 #inpSel{
     display:flex;
     justify-content:space-between;
@@ -86,4 +88,9 @@ th:nth-child(2), td:nth-child(2){
 }
 .error{
     color:red;
+}
+@media (max-width: 599px){
+    input, select{
+        max-width:100px;
+    }
 }

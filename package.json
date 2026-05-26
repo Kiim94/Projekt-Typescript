@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "ng build --configuration production --base-href \"https://kiim94.github.io/Projekt-Typescript/\" && npx angular-cli-ghpages --dir=dist/projektuppgift/browser"
   },
   "private": true,
   "packageManager": "npm@11.7.0",
