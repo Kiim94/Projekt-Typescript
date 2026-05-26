@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, effect } from '@angular/core';
 
 //importerar service från course. Där finns också interface för kurser 
 import { CourseService, Course } from "../services/course";
@@ -68,6 +68,14 @@ export class CoursesComponent {
       this.courses.set(data);
       this.loading.set(false);
     });
+
+    effect(() => {
+      this.selectedSubject();
+      this.searchPhrase();
+      this.sortCourses();
+      this.sortAsc();
+      this.currentPage.set(1);
+    })
   }
 
   //===METODER===

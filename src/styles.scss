@@ -7,7 +7,6 @@ html{
 }
 body{
     box-sizing:border-box;
-    overflow:hidden;
 }
 html, body{
     margin:0;
@@ -19,20 +18,20 @@ h1{
     font-size:3rem;
 }
 
-table{
+.table{
     border-collapse: collapse;
     width:100%;
-    min-width:800px;
+    max-width:100%;
     font-size:1.2rem;
 }
 
-th, td{
+.table th, .table td{
     height:auto;
     border: 1px solid black;
     padding:1rem;
     white-space: nowrap;
 }
-th{
+.table th{
     font-size:1.4rem;
     background:rgb(156,209,209);
 }
@@ -44,16 +43,12 @@ app-root{
     border:10px solid teal;
     overflow:auto;
 }
-.content{
-    max-width:1200px;
-    margin: 0 auto;
-}
 
 @media (max-width: 899px){
     html{
         font-size:14px;
     }
-    th, td{
+    .table th, .table td{
         padding:0.6rem;
     }
 }
@@ -61,7 +56,7 @@ app-root{
     html{
         font-size:12px;
     }
-    th, td{
+    .table th, .table td{
         padding:0.4rem;
     }
 }
