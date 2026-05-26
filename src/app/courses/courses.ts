@@ -70,10 +70,9 @@ export class CoursesComponent {
     });
 
     effect(() => {
-      this.selectedSubject();
-      this.searchPhrase();
-      this.sortCourses();
-      this.sortAsc();
+      const subject = this.selectedSubject();
+      const search = this.searchPhrase();
+      console.log("RESET PAGE")
       this.currentPage.set(1);
     })
   }
@@ -105,7 +104,7 @@ export class CoursesComponent {
     const asc = this.sortAsc();
 
     //returnera resultat: sortera
-    return result.sort((a,b) => {
+    return [...result].sort((a,b) => {
       const aValue = String(a[key]).toLowerCase();
       const bValue = String(b[key]).toLowerCase();
 
