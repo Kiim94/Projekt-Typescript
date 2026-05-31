@@ -31,8 +31,8 @@
               <tr>
                 <th (click)="sortBy('courseCode')">Kurskod <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
                 <th (click)="sortBy('courseName')">Kursnamn <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
-                <th (click)="sortBy('level')">Nivå <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
                 <th (click)="sortBy('points')">Poäng<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
+                <th (click)="sortBy('level')">Nivå <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
                 <th (click)="sortBy('subject')">Ämne <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2f4f4f"><path d="M320-440v-287L217-624l-57-56 200-200 200 200-57 56-103-103v287h-80ZM600-80 400-280l57-56 103 103v-287h80v287l103-103 57 56L600-80Z"/></svg></th>
                 <th>Lägg till</th>
               </tr>
@@ -44,8 +44,8 @@
                 <tr>
                   <td>{{ course.courseCode }}</td>
                   <td>{{ course.courseName }}</td>
-                  <td>{{ course.level }}</td>
                   <td>{{course.points}}</td>
+                  <td>{{ course.level }}</td>
                   <td>{{ course.subject }}</td>
                   <td>
                     <span class="remove" (click)="addToSchedule(course)">Lägg till</span>

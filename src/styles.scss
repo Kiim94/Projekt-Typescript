@@ -7,6 +7,7 @@ html{
 }
 body{
     box-sizing:border-box;
+    font-family: "Nunito", sans-serif;
 }
 html, body{
     margin:0;
@@ -15,7 +16,7 @@ html, body{
 }
 h1{
     text-align:center;
-    font-size:3rem;
+    font-size:2.5rem;
 }
 
 .table{
@@ -29,12 +30,14 @@ h1{
     height:auto;
     border: 1px solid black;
     padding:1rem;
-    white-space: nowrap;
+    
 }
+
 .table th{
     font-size:1.4rem;
     background:rgb(156,209,209);
 }
+
 
 //div runt båda tabeller. Satt globalt pga att det är exakt samma styling
 .tableWrap{
@@ -43,7 +46,7 @@ h1{
     overflow-x: auto;
 
     //detta ska ge mer mjuk scroll på mobil
-    -webkit-overflow-scrollning: touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 app-root{
@@ -59,14 +62,17 @@ app-root{
         font-size:14px;
     }
     .table th, .table td{
-        padding:0.6rem;
+        padding:0.8rem;
+    }
+    .table td:nth-child(6),
+    .table th:nth-child(6) {
+    text-align: center;
+    padding: 0.4rem;
+    white-space: nowrap;
     }
 }
 @media (max-width: 599px){
     html{
         font-size:12px;
-    }
-    .table th, .table td{
-        padding:0.4rem;
     }
 }
