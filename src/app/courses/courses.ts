@@ -36,7 +36,7 @@ export class CoursesComponent {
 
   //pagination
   currentPage = signal(1);
-  itemsPerPage = 10;
+  itemsPerPage = 20;
 
   //signal för att ändra vilket ämne man tittar på från select
   selectedSubject = signal<string>("Alla kurser");
@@ -105,6 +105,12 @@ export class CoursesComponent {
 
     //returnera resultat: sortera
     return [...result].sort((a,b) => {
+      if(key === "points"){
+        const aNum = Number(a.points);
+        const bNum = Number(b.points);
+        return asc ? aNum - bNum : bNum - aNum;
+      }
+      
       const aValue = String(a[key]).toLowerCase();
       const bValue = String(b[key]).toLowerCase();
 

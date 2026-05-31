@@ -43,6 +43,16 @@ export class ScheduleComponent {
     const asc = this.sortAsc();
 
     return [...this.courses()].sort((a, b) => {
+
+      //om man vill sortera efter högskolepoäng
+      //måste göras till nummer, om nyckel är points
+      if(key === "points"){
+        const aNum = Number(a.points);
+        const bNum = Number(b.points);
+        return asc ? aNum - bNum : bNum - aNum;
+      }
+
+      //annars sortera efter text
       const aValue = String(a[key]).toLowerCase();
       const bValue = String(b[key]).toLowerCase();
 
@@ -50,6 +60,14 @@ export class ScheduleComponent {
       if(aValue > bValue) return asc ? 1:-1;
       return 0;
     })
+  })
+
+  //uträkning för totala hp poäng för valda kurser
+  totalpoints = computed(() => {
+    //reduce() => sammanfattar alla värden till ett enda
+    return this.courses().reduce((sum, course) => {
+      return sum + course.points;
+    }, 0);
   })
 
   sortBy(field: keyof Course){
