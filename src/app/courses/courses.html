@@ -2,6 +2,7 @@
   <div class="content">
     <h1>Sök och sortera på kurser</h1>
       <p style="text-align:center;">Klicka på kolumn-namnen för att ändra ordning</p>
+      <p id="courseCount"><strong>Antal valda kurser:</strong> {{ scheduleCount() }}</p>
       <div id="inpSel">
         <input (input)="setSearch($event.target.value)" placeholder="Sök...">
         <select #subject (change)="selectedSubject.set(subject.value)">

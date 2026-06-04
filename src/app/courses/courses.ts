@@ -36,11 +36,13 @@ export class CoursesComponent {
 
   //pagination
   currentPage = signal(1);
-  itemsPerPage = 20;
+  itemsPerPage = 15;
 
   //signal för att ändra vilket ämne man tittar på från select
   selectedSubject = signal<string>("Alla kurser");
 
+  //signal för alla sparade kurser
+  savedCourses=signal<Course[]>([]);
 
   //===COMPUTED/UTRÄKNINGAR===
   paginatedCourses = computed(() => {
@@ -62,8 +64,15 @@ export class CoursesComponent {
     return ["Alla kurser", ...new Set(all)];
   })
 
+  //uträkning för att kunna visa hur många kurser som finns i ramschemat
+  scheduleCount = computed(() => 
+    this.savedCourses().length);
+
   //===CONSTRUCTOR = Bygg på en gång===
   constructor(private courseService: CourseService){
+    const saved = JSON.parse(localStorage.getItem("courses") || "[]");
+    this.savedCourses.set(saved);
+
     this.courseService.getCourses().subscribe(data => {
       this.courses.set(data);
       this.loading.set(false);
@@ -155,6 +164,11 @@ export class CoursesComponent {
     savedCourses.push(course);
     //spara tillbaka
     localStorage.setItem("courses",JSON.stringify(savedCourses));
+
+    //uppdatera paragraf som visar hur många kurser som har valts
+    this.savedCourses.set(savedCourses);
+
+    //visa meddelande
     this.showMessage("Kurs tillagd!", true);
   }
   //visa meddelande om kurs finns tillagd/blir tillagd
@@ -163,6 +177,7 @@ export class CoursesComponent {
     this.isSuccess.set(success);
     console.log("SET:", this.message);
 
+    //ta bort meddelande efter ett tag
     setTimeout(() => {
       this.message.set("");
     }, 3000);

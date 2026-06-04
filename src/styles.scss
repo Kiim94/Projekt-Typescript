@@ -29,13 +29,15 @@ h1{
 .table th, .table td{
     height:auto;
     border: 1px solid black;
-    padding:1rem;
-    
+    padding:1rem;  
 }
 
 .table th{
     font-size:1.4rem;
     background:rgb(156,209,209);
+    &:last-child{
+    white-space: nowrap;
+    }
 }
 
 
