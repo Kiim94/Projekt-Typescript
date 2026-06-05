@@ -67,6 +67,10 @@ export class CoursesComponent {
   scheduleCount = computed(() => 
     this.coursesService.savedCourses().length);
 
+  //uträkning som visar hur många kurser som sökts efter
+  courseCount = computed(() => 
+    this.filteredCourses().length);
+
   //===CONSTRUCTOR = Bygg på en gång===
   constructor(
     private dataService: DataService,

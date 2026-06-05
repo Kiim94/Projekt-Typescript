@@ -1,19 +1,33 @@
 <div id="coursesDiv">
   <div class="content">
-    <h1>Sök och sortera på kurser</h1>
-      <p style="text-align:center;">Klicka på kolumn-namnen för att ändra ordning</p>
-      <p id="courseCount"><strong>Antal valda kurser:</strong> {{ scheduleCount() }}</p>
+    <h1>Kursöversikt</h1>
+    <div class="center-text">
+      <p>Välkommen till kursöversikten! Här nedan kan du söka bland de kurser som gick att välja bland under 2023 från MittUniversitetet. 
+        Du kan filtera efter ämne, skriva sökord samt ändra sorteringen i fallande och stigande ordning.
+      </p>
+      <p>Just nu har du <span><strong id="scheduleCount">{{ scheduleCount() }}</strong></span> stycken valda kurser i ramschemat</p>
+      </div>
       <div id="inpSel">
-        <input (input)="setSearch($event.target.value)" placeholder="Sök...">
-        <select #subject (change)="selectedSubject.set(subject.value)">
-
-            @for (subject of subjects(); track subject){
-                <option [value]="subject">
-                    {{ subject }}
-                </option>
-                }
-        </select>
+        <div class="field">
+          <label for="search">Sök kurs:</label>
+          <input (input)="setSearch($event.target.value)" placeholder="Sök..." id="search">
         </div>
+        <div class="field">
+          <label for="subject">Ämne:</label>
+          <select #subject (change)="selectedSubject.set(subject.value)" id="subject">
+
+              @for (subject of subjects(); track subject){
+                  <option [value]="subject">
+                      {{ subject }}
+                  </option>
+                  }
+          </select>
+        </div>
+        </div>
+        <hr>
+        
+
+        <p id="allCoursesFound"><strong>Listar </strong>{{ courseCount() }} kurser</p>
 
       @if (loading()) {
         <p>Laddar...</p>

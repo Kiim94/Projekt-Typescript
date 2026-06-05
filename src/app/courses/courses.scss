@@ -7,8 +7,19 @@
 #inpSel{
     display:flex;
     justify-content:space-between;
-    align-items:center;
     gap:2rem;
+    width:100%;
+    .field{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        width:100%;
+        max-width:500px;
+        label{
+            font-size:1.1rem;
+            font-weight:bold;
+        }
+    }
 }
 
 .message{
@@ -16,14 +27,17 @@
     margin-bottom:1rem;
     font-weight:bold;
 }
-#courseCount{
+#scheduleCount{
+    color: rgb(3, 82, 82);
+    font-size:1.2rem;
+}
+#allCoursesFound{
     color: rgb(3, 82, 82);
     font-size:1.2rem;
 }
 
 input, select{
     width:100%;
-    max-width:300px;
     margin-bottom:1rem;
     font-size:1.2rem;
     padding:0.3rem;
@@ -55,12 +69,15 @@ tr:nth-child(even){
 }
 
 .pagination{
-    text-align:center;
-    padding:0.5rem;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:0.5rem;
+    margin-top:1rem;
     button{
         cursor:pointer;
         margin: 0 1rem;
-        padding:0.5rem 1rem;
+        padding:0.4rem 0.8rem;
         background-color:teal;
         border-radius:10px;
         border:none;
@@ -78,7 +95,7 @@ tr:nth-child(even){
         }
     }
     span, button{
-        font-size:1.3rem;
+        font-size:1.1rem;
     }
 }
 .success{
@@ -88,6 +105,7 @@ tr:nth-child(even){
     color:red;
 }
 
+
 @media (max-width: 600px){
     #inpSel{
         flex-direction:column;
@@ -96,5 +114,15 @@ tr:nth-child(even){
     input, select{
         width:100%;
         max-width:none;
+    }
+    .pagination{
+        button{
+            padding:0.3rem 0.6rem;
+            font-size:1rem;
+            margin: 0 0.5rem;
+        }
+        span{
+            font-size:1rem;
+        }
     }
 }

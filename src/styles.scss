@@ -8,6 +8,8 @@ html{
 body{
     box-sizing:border-box;
     font-family: "Nunito", sans-serif;
+    padding:0;
+    margin:0;
 }
 html, body{
     margin:0;
@@ -58,10 +60,15 @@ app-root{
     border:10px solid teal;
     overflow:auto;
 }
+.center-text{
+    max-width:900px;
+    margin:0 auto;
+    line-height:1.8;
+}
 
 @media (max-width: 899px){
     html{
-        font-size:14px;
+        font-size:15px;
     }
     .table th, .table td{
         padding:0.8rem;
@@ -75,6 +82,6 @@ app-root{
 }
 @media (max-width: 599px){
     html{
-        font-size:12px;
+        font-size:14px;
     }
 }
