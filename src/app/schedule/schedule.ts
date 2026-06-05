@@ -1,5 +1,6 @@
 import { Component, signal, computed } from '@angular/core';
-import { Course } from "../services/course";
+import { CourseModel } from "../services/data-service";
+import { CoursesService } from '../services/courses-service';
 
 @Component({
   selector: 'app-schedule',
@@ -9,18 +10,16 @@ import { Course } from "../services/course";
   styleUrl: './schedule.scss',
 })
 export class ScheduleComponent {
-  //tom array för alla kurser
-  courses = signal<Course[]>([]);
+  
+  constructor(private coursesService: CoursesService) {}
+
+  get courses(){
+    return this.coursesService.savedCourses;
+  } 
 
   //sortering a-ö 
-  sortKey = signal<keyof Course>("courseCode");
+  sortKey = signal<keyof CourseModel>("courseCode");
   sortAsc = signal<boolean>(true);
-
-  constructor(){
-    const saved = JSON.parse(localStorage.getItem("courses") || "[]");
-
-    this.courses.set(saved);
-  }
 
   //ta bort kurser
   removeCourse(courseCode: string){
@@ -29,12 +28,8 @@ export class ScheduleComponent {
     if(!isConfirmed){
       return;
     }
-    //filtrerar bort vald kurs
-    const updated = this.courses().filter(c => c.courseCode !== courseCode);
-    //uppdaterar signalen så att UI ändras direkt
-    this.courses.set(updated);
-    //spara uppdaterad lista
-    localStorage.setItem("courses", JSON.stringify(updated));
+
+    this.coursesService.removeCourse(courseCode)
   }
 
   //sortera med computed
@@ -42,7 +37,7 @@ export class ScheduleComponent {
     const key = this.sortKey();
     const asc = this.sortAsc();
 
-    return [...this.courses()].sort((a, b) => {
+    return [...this.coursesService.savedCourses()].sort((a, b) => {
 
       //om man vill sortera efter högskolepoäng
       //måste göras till nummer, om nyckel är points
@@ -65,12 +60,12 @@ export class ScheduleComponent {
   //uträkning för totala hp poäng för valda kurser
   totalpoints = computed(() => {
     //reduce() => sammanfattar alla värden till ett enda
-    return this.courses().reduce((sum, course) => {
+    return this.coursesService.savedCourses().reduce((sum, course) => {
       return sum + course.points;
     }, 0);
   })
 
-  sortBy(field: keyof Course){
+  sortBy(field: keyof CourseModel){
     if(this.sortKey() === field){
       this.sortAsc.update(v => !v);
     }else{

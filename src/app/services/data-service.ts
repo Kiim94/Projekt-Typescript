@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
+//denna fil hanterar både modell för kursobjekt samt hämtande av JSON-fil mned kursdata
 
 //interface för kursobjekt
-export interface Course {
+export interface CourseModel {
   courseCode: string,
   subjectCode: string,
   level: string,
@@ -18,7 +19,7 @@ export interface Course {
 @Injectable({
   providedIn: 'root',
 })
-export class CourseService {
+export class DataService {
   //testat att ladda ner json-data och använda direkt i filen
   private url = "assets/miun_courses.json";
 
@@ -26,7 +27,7 @@ export class CourseService {
     private http: HttpClient
   ){}
 
-  getCourses(): Observable<Course[]>{
-    return this.http.get<Course[]>(this.url);
+  getCourses(): Observable<CourseModel[]>{
+    return this.http.get<CourseModel[]>(this.url);
   }
 }

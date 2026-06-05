@@ -1,9 +1,11 @@
 import { Component, signal, computed, effect } from '@angular/core';
 
 //importerar service från course. Där finns också interface för kurser 
-import { CourseService, Course } from "../services/course";
+import { DataService, CourseModel } from "../services/data-service";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+
+import { CoursesService } from "../services/courses-service"
 
 @Component({
   selector: 'app-courses',
@@ -15,12 +17,12 @@ import { FormsModule } from "@angular/forms";
 
 export class CoursesComponent {
   //kurser sparas i array-minne
-  courses = signal<Course[]>([]);
+  courses = signal<CourseModel[]>([]);
 
   searchPhrase = signal<string>("");
 
   //för sortering av kolumner. Utgår initialt från första kolumnen "code", a-ö. 
-  sortCourses = signal<keyof Course>("courseCode");
+  sortCourses = signal<keyof CourseModel>("courseCode");
 
   //sortering: grundläga = true, mao stigande (A-Ö)
   sortAsc= signal<boolean>(true);
@@ -40,9 +42,6 @@ export class CoursesComponent {
 
   //signal för att ändra vilket ämne man tittar på från select
   selectedSubject = signal<string>("Alla kurser");
-
-  //signal för alla sparade kurser
-  savedCourses=signal<Course[]>([]);
 
   //===COMPUTED/UTRÄKNINGAR===
   paginatedCourses = computed(() => {
@@ -66,22 +65,21 @@ export class CoursesComponent {
 
   //uträkning för att kunna visa hur många kurser som finns i ramschemat
   scheduleCount = computed(() => 
-    this.savedCourses().length);
+    this.coursesService.savedCourses().length);
 
   //===CONSTRUCTOR = Bygg på en gång===
-  constructor(private courseService: CourseService){
-    const saved = JSON.parse(localStorage.getItem("courses") || "[]");
-    this.savedCourses.set(saved);
+  constructor(
+    private dataService: DataService,
+    private coursesService: CoursesService){
 
-    this.courseService.getCourses().subscribe(data => {
+    this.dataService.getCourses().subscribe(data => {
       this.courses.set(data);
       this.loading.set(false);
     });
 
     effect(() => {
-      const subject = this.selectedSubject();
-      const search = this.searchPhrase();
-      console.log("RESET PAGE")
+      this.selectedSubject();
+      this.searchPhrase();
       this.currentPage.set(1);
     })
   }
@@ -136,7 +134,7 @@ export class CoursesComponent {
   }
 
   //sortera tabell efter den kolumn användaren klickade på
-  sortBy(field: keyof Course) {
+  sortBy(field: keyof CourseModel) {
 
     if (this.sortCourses() === field) {
       this.sortAsc.update(v => !v);
@@ -148,27 +146,14 @@ export class CoursesComponent {
 
 
   //lägg till kurser till localstorage
-  addToSchedule(course: Course){
+  addToSchedule(course: CourseModel){
     //hämta sparade kurser: är en array
-    const savedCourses: Course[] = JSON.parse(localStorage.getItem("courses") || "[]");
-    
-    //variabel: ifall en kurs redan finns med i listan
-    const courseExists = savedCourses.some((c: Course) => c.courseCode === course.courseCode);
+    const added = this.coursesService.addCourse(course);
 
-    if(courseExists){
+    if(!added){
       this.showMessage("Kursen finns redan i schemat!", false);
       return;
     }
-    
-    //lägg till kurs
-    savedCourses.push(course);
-    //spara tillbaka
-    localStorage.setItem("courses",JSON.stringify(savedCourses));
-
-    //uppdatera paragraf som visar hur många kurser som har valts
-    this.savedCourses.set(savedCourses);
-
-    //visa meddelande
     this.showMessage("Kurs tillagd!", true);
   }
   //visa meddelande om kurs finns tillagd/blir tillagd
