@@ -37,6 +37,8 @@ export class CoursesComponent {
   isSuccess = signal(true);
 
   //pagination
+  //första sidan är alltid 1
+  //visa 15 kurser/sida
   currentPage = signal(1);
   itemsPerPage = 15;
 
@@ -76,11 +78,17 @@ export class CoursesComponent {
     private dataService: DataService,
     private coursesService: CoursesService){
 
+    //subscribe = "prenumeration" som lyssnar efter förändringar över tid
+    //förändringar fångas upp som data
+    //sparas i array courses (se högst upp i denna komponent export)
+    //gör laddning till falskt när det är klart: ny data har kommit in och visas, behöver inte laddas
     this.dataService.getCourses().subscribe(data => {
       this.courses.set(data);
       this.loading.set(false);
     });
 
+    //använd effect för att övervaka förändringar. 
+    //nollställ automatiskt när något på sidan förändras (byter ämne, skriver sökfras)
     effect(() => {
       this.selectedSubject();
       this.searchPhrase();
@@ -115,6 +123,8 @@ export class CoursesComponent {
     const asc = this.sortAsc();
 
     //returnera resultat: sortera
+    //skapa ny array utan att röra gamla (result)
+    //sortera, men kontrollera först om det är poäng (siffror)
     return [...result].sort((a,b) => {
       if(key === "points"){
         const aNum = Number(a.points);
@@ -174,6 +184,7 @@ export class CoursesComponent {
 
 
   //pagination: visa fler sidor
+  //update: ta vilken sida det är just nu, + 1 när man går till nästa. Annars -1 om nuvarande sida är mer än 1
   nextPage(){
     this.currentPage.update(page => page + 1);
   }
